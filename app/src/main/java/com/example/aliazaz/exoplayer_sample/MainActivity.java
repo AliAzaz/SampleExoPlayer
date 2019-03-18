@@ -2,21 +2,18 @@ package com.example.aliazaz.exoplayer_sample;
 
 import android.Manifest;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
@@ -71,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         MediaSource secondSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(RawResourceDataSource.buildRawResourceUri(R.raw.landscape));
 
+        MediaSource thirdSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(RawResourceDataSource.buildRawResourceUri(R.raw.vrvideo));
+
         // Plays the first video, then the second video.
-        ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSource, secondSource);
+        ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSource, secondSource, thirdSource);
 
         // Prepare the player with the source.
         player.prepare(concatenatedSource);
@@ -87,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
                 // Set video name in textview
                 txtName.setText("Playing: " + getVideoName()[player.getCurrentWindowIndex()].toUpperCase());
             }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+                player.retry();
+            }
         });
 
     }
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String[] getVideoName() {
-        return new String[]{"landscape2", "landscape"};
+        return new String[]{"landscape2", "landscape", "vr-video"};
     }
 
     public void verifyPermission() {

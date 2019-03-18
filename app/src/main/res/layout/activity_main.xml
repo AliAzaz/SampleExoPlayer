@@ -36,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:repeat_toggle_modes="all|one" />
+        app:repeat_toggle_modes="all|one"
+        app:surface_type="spherical_view" />
 
 </android.support.constraint.ConstraintLayout>
