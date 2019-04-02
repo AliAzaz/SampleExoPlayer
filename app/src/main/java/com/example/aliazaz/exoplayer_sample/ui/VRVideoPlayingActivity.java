@@ -91,7 +91,6 @@ public class VRVideoPlayingActivity extends AppCompatActivity {
     }
 
     public void verifyPermission() {
-
         //Check permission for devices API > 22
         Permissions.check(this/*context*/, Manifest.permission.WRITE_EXTERNAL_STORAGE, null, new PermissionHandler() {
             @Override
@@ -106,7 +105,6 @@ public class VRVideoPlayingActivity extends AppCompatActivity {
                 verifyPermission();
             }
         });
-
     }
 
     private void releasePlayer() {
