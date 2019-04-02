@@ -40,7 +40,6 @@ public class VideoPlayingActivity extends AppCompatActivity {
     DataSource.Factory dataSourceFactory;
     Long playbackPosition = new Long(0);
     int currentWindow = 0;
-    boolean playWhenReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +60,8 @@ public class VideoPlayingActivity extends AppCompatActivity {
     }
 
     private void setupExoPlayer() {
-
         //Setup Exoplayer
         exoPlayerInstance = ExoPlayerFactory.newSimpleInstance(this);
-
-        // Bind the exoPlayerInstance to the view.
-        playerView.setPlayer(exoPlayerInstance);
-        exoPlayerInstance.setPlayWhenReady(playWhenReady);
 
         // This is the MediaSource representing the media to be played.
 
@@ -134,20 +128,13 @@ public class VideoPlayingActivity extends AppCompatActivity {
         if (exoPlayerInstance != null) {
             playbackPosition = exoPlayerInstance.getCurrentPosition();
             currentWindow = exoPlayerInstance.getCurrentWindowIndex();
-            playWhenReady = exoPlayerInstance.getPlayWhenReady();
-            /*exoPlayerInstance.release();
-            exoPlayerInstance = null;*/
             exoPlayerInstance.setPlayWhenReady(false);
-            exoPlayerInstance.stop();
-            exoPlayerInstance.seekTo(0);
+            playerView.onResume();
         }
     }
 
-    private void initializePlayer() {
-
+    private void restartPlayer() {
         playerView.setPlayer(exoPlayerInstance);
-
-        exoPlayerInstance.setPlayWhenReady(playWhenReady);
         exoPlayerInstance.seekTo(currentWindow, playbackPosition);
     }
 
@@ -155,9 +142,7 @@ public class VideoPlayingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (exoPlayerInstance != null) {
-//            setupExoPlayer();
-            /*exoPlayerInstance.setPlayWhenReady(true);
-            exoPlayerInstance.seekTo(currentWindow, playbackPosition);*/
+            restartPlayer();
         }
     }
 
