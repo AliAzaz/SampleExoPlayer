@@ -71,7 +71,12 @@ public class VideoPlayingActivity extends AppCompatActivity {
         // Getting media from raw resource
         MediaSource secondSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(RawResourceDataSource.buildRawResourceUri(R.raw.landscape));
 
-        // Plays the first video, then the second video.
+         /* If we've more then one video then use this concept
+         otherwise:
+
+            exoPlayerInstance.prepare(firstSource);
+
+         Plays the first video, then the second video.*/
         ConcatenatingMediaSource concatenatedSource = new ConcatenatingMediaSource(firstSource, secondSource);
 
         // Prepare the exoPlayerInstance with the source.
