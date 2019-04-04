@@ -44,12 +44,14 @@ public class VideoPlayingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video_playing);
+
         settingComponents();
         verifyPermission();
     }
 
     private void settingComponents() {
-        setContentView(R.layout.activity_video_playing);
+
         playerView = findViewById(R.id.player_view);
         txtName = findViewById(R.id.txtName);
 
