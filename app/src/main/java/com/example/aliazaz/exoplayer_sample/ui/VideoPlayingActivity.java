@@ -131,7 +131,7 @@ public class VideoPlayingActivity extends AppCompatActivity {
 
     }
 
-    private void releasePlayer() {
+    private void stopPlayer() {
         if (exoPlayerInstance != null) {
             playbackPosition = exoPlayerInstance.getCurrentPosition();
             currentWindow = exoPlayerInstance.getCurrentWindowIndex();
@@ -157,7 +157,7 @@ public class VideoPlayingActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            releasePlayer();
+            stopPlayer();
         }
     }
 
@@ -165,7 +165,7 @@ public class VideoPlayingActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         if (Util.SDK_INT > 23) {
-            releasePlayer();
+            stopPlayer();
         }
     }
 
